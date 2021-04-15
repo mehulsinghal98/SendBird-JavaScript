@@ -10,7 +10,7 @@ import { Button, HR, Spinner } from '../components';
 
 class Menu extends Component {
   static navigationOptions = {
-    title: 'Sendbird'
+    title: 'ShopMyCar Partner'
   };
 
   constructor(props) {
@@ -179,11 +179,11 @@ class Menu extends Component {
           containerViewStyle={styles.menuViewStyle}
           buttonStyle={styles.buttonStyle}
           backgroundColor="#fff"
-          color="#6e5baa"
+          color="blue"
           icon={{
             name: 'slack',
             type: 'font-awesome',
-            color: '#6e5baa',
+            color: 'blue',
             size: 16
           }}
           title="Open Channel"
