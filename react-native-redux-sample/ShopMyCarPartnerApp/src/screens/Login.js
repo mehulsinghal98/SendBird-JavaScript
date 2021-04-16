@@ -6,6 +6,9 @@ import { sbRegisterPushToken } from '../sendbirdActions';
 import { NavigationActions, StackActions } from 'react-navigation';
 import { Button, Spinner } from '../components';
 import firebase from 'react-native-firebase';
+import image from '../img/icon_sb_341.png';
+import imagee from '../img/icon_sb_681.png';
+import imager from '../img/logo.png';
 
 class Login extends Component {
   static navigationOptions = {
@@ -72,15 +75,15 @@ class Login extends Component {
       <View style={styles.containerStyle}>
         <Spinner visible={this.state.isLoading} />
         <View style={styles.logoViewStyle}>
-          <Image style={{ width: 150, height: 150 }} source={require('../img/icon_sb_512.png')} />
-          <Text style={styles.logoTextTitle}>SendBird</Text>
-          <Text style={styles.logoTextSubTitle}>React Native</Text>
+        <Image style={{ width: 150, height: 150 }} source={imager} />
+         <Text style={styles.logoTextTitle}>Welcome to Shop My Car</Text>
+          <Text style={styles.logoTextSubTitle}>Please login by providing your contact no</Text>
         </View>
 
         <View style={styles.inputViewStyle}>
           <TextInput
-            label="User ID"
-            placeholder="User ID"
+            label="Mobile Number"
+            placeholder="Mobile Number"
             style={styles.inputStyle}
             value={this.state.userId}
             duration={100}
@@ -92,9 +95,9 @@ class Login extends Component {
         </View>
 
         <View style={styles.inputViewStyle}>
-          <TextInput
-            label="Nickname"
-            placeholder="Nickname"
+         <TextInput
+            label="OTP"
+            placeholder="OTP"
             style={styles.inputStyle}
             value={this.state.nickname}
             duration={100}
@@ -107,8 +110,8 @@ class Login extends Component {
 
         <View style={styles.buttonStyle}>
           <Button
-            title="CONNECT"
-            buttonStyle={{ backgroundColor: '#6e5baa' }}
+            title="Continue"
+            buttonStyle={{ backgroundColor: '#6e5baa'}}
             onPress={this._onButtonPress}
             disabled={this.state.isLoading}
           />
@@ -116,8 +119,8 @@ class Login extends Component {
 
         <Text style={styles.errorTextStyle}>{this.props.error}</Text>
 
-        <View style={[styles.footerViewStyle]}>
-          <Text style={styles.footerTextStyle}>Sample UI v3.0.0 / SDK v.3.0.99</Text>
+       <View style={[styles.footerViewStyle]}>
+
         </View>
       </View>
     );
@@ -137,6 +140,7 @@ export default connect(
 const styles = {
   containerStyle: {
     backgroundColor: '#fff',
+    marginTop: 200,
     flex: 1
   },
   logoViewStyle: {
@@ -171,7 +175,8 @@ const styles = {
   buttonStyle: {
     paddingLeft: 12,
     paddingRight: 12,
-    marginTop: 50
+    marginTop: 50,
+    //background-image: 'url(../img/icon_sb_512.png)'
   },
   errorTextStyle: {
     alignSelf: 'center',
@@ -183,10 +188,5 @@ const styles = {
     paddingRight: 28,
     marginTop: 15,
     flexDirection: 'column'
-  },
-  footerTextStyle: {
-    alignSelf: 'center',
-    fontSize: 12,
-    color: '#8e8e8e'
   }
 };
