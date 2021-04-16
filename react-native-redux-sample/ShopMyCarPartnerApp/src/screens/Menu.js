@@ -164,7 +164,7 @@ class Menu extends Component {
           containerViewStyle={styles.menuViewStyle}
           buttonStyle={styles.buttonStyle}
           backgroundColor="#fff"
-          color="#6e5baa"
+          color="#263673"
           icon={{
             name: 'user',
             type: 'font-awesome',
@@ -179,11 +179,11 @@ class Menu extends Component {
           containerViewStyle={styles.menuViewStyle}
           buttonStyle={styles.buttonStyle}
           backgroundColor="#fff"
-          color="blue"
+          color="#263673"
           icon={{
             name: 'slack',
             type: 'font-awesome',
-            color: 'blue',
+            color: '#6e5baa',
             size: 16
           }}
           title="Open Channel"
@@ -194,7 +194,7 @@ class Menu extends Component {
           containerViewStyle={styles.menuViewStyle}
           buttonStyle={styles.buttonStyle}
           backgroundColor="#fff"
-          color="#6e5baa"
+          color="#263673"
           icon={{
             name: 'users',
             type: 'font-awesome',
@@ -210,7 +210,7 @@ class Menu extends Component {
           buttonStyle={styles.buttonStyle}
           backgroundColor="#fff"
           color="#7d62d9"
-          color="#6e5baa"
+          color="#263673"
           icon={{
             name: 'sign-out',
             type: 'font-awesome',
