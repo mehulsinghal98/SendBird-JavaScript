@@ -2,6 +2,10 @@
 export const INIT_LOGIN = 'init_login';
 export const LOGIN_SUCCESS = 'login_success';
 export const LOGIN_FAIL = 'login_fail';
+export const VALID_NUMBER = 'valid_number';
+export const INVALID_NUMBER = 'invalid_number';
+export const VALID_OTP = 'valid_otp';
+export const INVALID_OTP = 'invalid_otp';
 
 export const INIT_MENU = 'init_menu';
 export const DISCONNECT_SUCCESS = 'disconnect_success';

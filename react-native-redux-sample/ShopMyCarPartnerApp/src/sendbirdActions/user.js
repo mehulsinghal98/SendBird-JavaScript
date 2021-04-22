@@ -5,7 +5,7 @@ import firebase from 'react-native-firebase';
 
 // const APP_ID = '078105E7-BD8C-43C9-A583-59E334353965'; // test
 const APP_ID = '9DA1B1F4-0BE6-4DA8-82C5-2E81DAB56F23'; // sample
-//const APP_ID = 'AC108EA6-FC17-404A-8323-D0C343D2A356';
+//const APP_ID = '7D942A64-CE3C-4BD9-9517-47ECD18C4257';  //beta
 
 export const sbRegisterPushToken = () => {
   return new Promise((resolve, reject) => {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, Image } from 'react-native';
 import { connect } from 'react-redux';
-import { initLogin, sendbirdLogin } from '../actions';
+import { initLogin, sendbirdLogin, smcLogin, smcConfirmOTP } from '../actions';
 import { sbRegisterPushToken } from '../sendbirdActions';
 import { NavigationActions, StackActions } from 'react-navigation';
 import { Button, Spinner } from '../components';
@@ -20,8 +20,9 @@ class Login extends Component {
     super(props);
     this.state = {
       isLoading: false,
-      userId: '',
-      nickname: 'n'
+      mobileNumber: '',
+      otp: '',
+      showMobileNumberBox : true
     };
   }
 
@@ -30,7 +31,8 @@ class Login extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    let { user, error } = this.props;
+    let { user, error, smc_login_id } = this.props;
+
     if (user && user !== prevProps.user) {
       firebase
         .messaging()
@@ -46,7 +48,7 @@ class Login extends Component {
         index: 0,
         actions: [NavigationActions.navigate({ routeName: 'Menu' })]
       });
-      this.setState({ userId: '', nickname: '', isLoading: false }, () => {
+      this.setState({ userId: '', isLoading: false }, () => {
         this.props.navigation.dispatch(resetAction);
       });
     }
@@ -56,20 +58,47 @@ class Login extends Component {
     }
   }
 
-  _onUserIdChanged = userId => {
-    this.setState({ userId });
+  _onMobileNumberChanged = mobileNumber => {
+    this.setState({ mobileNumber });
   };
 
-  _onNicknameChanged = nickname => {
-    this.setState({ nickname });
+  _onOtpChanged = otp => {
+    this.setState({ otp });
   };
 
-  _onButtonPress = () => {
-    const { userId, nickname } = this.state;
-    this.setState({ isLoading: true }, () => {
-      this.props.sendbirdLogin({ userId, nickname });
+//  _onButtonPress = () => {
+//    const { mobileNumber, nickname } = this.state;
+//    this.setState({ showMobileNumberBox : false }, () => {
+//  //    this.props.sendbirdLogin({ userId : mobileNumber, nickname });
+//    });
+//  };
+
+  _onMobileNumberSubmit = () => {
+    const { mobileNumber} = this.state;
+
+      this.props.smcLogin("+91"+mobileNumber, () => {
+      this.setState({ showMobileNumberBox : false });
+      //console.log("Mobil");
+      });
+  };
+
+  _onOtpSubmit = () => {
+    const {otp} = this.state;
+    const {smc_login_id} = this.props;
+
+    this.props.smcConfirmOTP(otp,smc_login_id, () => {
+    //console.log(this.props.smc_user_data);
+        const {mobile,first_name} = this.props.smc_user_data.showroom_staff;
+        this.setState({isLoading: true}, () => {
+            this.props.sendbirdLogin({userId : mobile, nickname : first_name})
+        });
     });
-  };
+
+
+
+   };
+
+
 
   render() {
     return (
@@ -83,50 +112,55 @@ class Login extends Component {
           <Text style={styles.logoTextSubTitle}>manager/supervisor to login below</Text>
         </View>
 
+        {this.state.showMobileNumberBox ? (
         <View style={styles.inputViewStyle}>
           <TextInput
             label="Mobile Number"
-            placeholder="Mobile Number"
+            placeholder="Enter Mobile Number"
+            keyboardType='numeric'
             style={styles.inputStyle}
-            value={this.state.userId}
+            value={this.state.mobileNumber}
             duration={100}
             autoCorrect={false}
             maxLength={16}
             underlineColorAndroid="transparent"
-            onChangeText={this._onUserIdChanged}
+            onChangeText={this._onMobileNumberChanged}
           />
         </View>
-{/*
+        ) : (
         <View style={styles.inputViewStyle}>
          <TextInput
             label="OTP"
-            placeholder="OTP"
+            placeholder="Enter OTP"
+            keyboardType='numeric'
             style={styles.inputStyle}
-            value={this.state.nickname}
+            value={this.state.otp}
             duration={100}
             autoCorrect={false}
             maxLength={16}
             underlineColorAndroid="transparent"
-            onChangeText={this._onNicknameChanged}
+            onChangeText={this._onOtpChanged}
           />
-        </View> */ }
+        </View>
+        )}
 
         <View style={styles.buttonStyle}>
           <Button
-            //title="Continue"
-            icon={{
-                        name: 'arrow-right',
-                        type: 'font-awesome',
-                        color: 'white',
-                        size: 14
-                      }}
-            buttonStyle={{ backgroundColor: '#263673'}}
-            onPress={this._onButtonPress}
+            title={this.state.showMobileNumberBox? "Send OTP" : "Login"}
+//            icon={{
+//                        name: 'arrow-right',
+//                        type: 'font-awesome',
+//                        color: 'white',
+//                        size: 14,
+//
+//                      }}
+            buttonStyle={{ backgroundColor: '#263673', alignItems:'center'}}
+            onPress={this.state.showMobileNumberBox? this._onMobileNumberSubmit : this._onOtpSubmit}
             disabled={this.state.isLoading}
           />
         </View>
 
-        <Text style={styles.errorTextStyle}>{this.props.error}</Text>
+{/*        <Text style={styles.errorTextStyle}>{this.props.error}</Text>  */}
 
          <Image style={styles.imageStyle} source={login_image} />
 
@@ -136,13 +170,13 @@ class Login extends Component {
 }
 
 function mapStateToProps({ login }) {
-  const { error, user } = login;
-  return { error, user };
+  const { error, user, smc_login_id, smc_user_data } = login;
+  return { error, user, smc_login_id, smc_user_data };
 }
 
 export default connect(
   mapStateToProps,
-  { initLogin, sendbirdLogin }
+  { initLogin, sendbirdLogin, smcLogin, smcConfirmOTP }
 )(Login);
 
 const styles = {
@@ -195,9 +229,10 @@ const styles = {
   buttonStyle: {
     paddingLeft: 12,
     paddingRight: 12,
-    marginTop: 30,
+    marginTop: 20,
+    marginBottom : 20,
     color : '#263673',
-    width : 100,
+    //width : 100,
     alignSelf : 'center',
     alignItems : 'center'
 //    backgroundImage: image

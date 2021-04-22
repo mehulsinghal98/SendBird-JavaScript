@@ -20,7 +20,9 @@ class GroupChannel extends Component {
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
     return {
-      title: 'Group Channel',
+      title: 'ShopMyCar Partner',
+      headerStyle : styles.headerStyle,
+      headerTitleStyle : {color : 'white'},
       headerLeft: (
         <Button
           containerViewStyle={{ marginLeft: 0, marginRight: 0 }}
@@ -28,7 +30,7 @@ class GroupChannel extends Component {
           icon={{
             name: 'chevron-left',
             type: 'font-awesome',
-            color: '#7d62d9',
+            color: 'white',
             size: 18
           }}
           backgroundColor="transparent"
@@ -42,7 +44,7 @@ class GroupChannel extends Component {
           iconRight={{
             name: 'user-plus',
             type: 'font-awesome',
-            color: '#7d62d9',
+            color: 'white',
             size: 18
           }}
           backgroundColor="transparent"
@@ -283,6 +285,10 @@ export default connect(
 )(GroupChannel);
 
 const styles = {
+
+  headerStyle : {
+    backgroundColor : '#263673'
+    },
   renderTitleViewStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
